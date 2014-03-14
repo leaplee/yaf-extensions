@@ -8,15 +8,15 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-namespace Think\Cache\Driver;
-use Think\Cache;
-defined('THINK_PATH') or exit();
+//namespace Think\Cache\Driver;
+//use Think\Cache;
+//defined('THINK_PATH') or exit();
 
 /**
  * Redis缓存驱动 
  * 要求安装phpredis扩展：https://github.com/nicolasff/phpredis
  */
-class Redis extends Cache {
+class Cache_Redis extends Cache {
 	 /**
 	 * 架构函数
      * @param array $options 缓存参数

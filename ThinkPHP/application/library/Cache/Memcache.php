@@ -8,13 +8,13 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-namespace Think\Cache\Driver;
-use Think\Cache;
-defined('THINK_PATH') or exit();
+//namespace Think\Cache\Driver;
+//use Think\Cache;
+//defined('THINK_PATH') or exit();
 /**
  * Memcache缓存驱动
  */
-class Memcache extends Cache {
+class Cache_Memcache extends Cache {
 
     /**
      * 架构函数
@@ -38,7 +38,7 @@ class Memcache extends Cache {
         $this->options['prefix'] =  isset($options['prefix'])?  $options['prefix']  :   Think::C('DATA_CACHE_PREFIX');        
         $this->options['length'] =  isset($options['length'])?  $options['length']  :   0;        
         $func               =   $options['persistent'] ? 'pconnect' : 'connect';
-        $this->handler      =   new \Memcache;
+        $this->handler      =   new Memcache;
         $options['timeout'] === false ?
             $this->handler->$func($options['host'], $options['port']) :
             $this->handler->$func($options['host'], $options['port'], $options['timeout']);

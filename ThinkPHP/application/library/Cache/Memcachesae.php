@@ -8,10 +8,10 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-namespace Think\Cache\Driver;
-use Think\Cache;
+//namespace Think\Cache\Driver;
+//use Think\Cache;
 
-defined('THINK_PATH') or exit();
+//defined('THINK_PATH') or exit();
 /**
  * Memcache缓存驱动
  * @category   Extend
@@ -19,7 +19,7 @@ defined('THINK_PATH') or exit();
  * @subpackage  Driver.Cache
  * @author    liu21st <liu21st@gmail.com>
  */
-class Memcachesae extends Cache {
+class Cache_Memcachesae extends Cache {
 
     /**
      * 架构函数

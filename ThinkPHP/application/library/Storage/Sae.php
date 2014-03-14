@@ -39,7 +39,7 @@ class Storage_Sae extends Storage{
     private function getKv(){
         static $kv;
         if(!$kv){
-           $kv  =   new \SaeKV();
+           $kv  =   new SaeKV();
            if(!$kv->init())
                Think::E('您没有初始化KVDB，请在SAE管理平台初始化KVDB服务');
         }
@@ -74,7 +74,6 @@ class Storage_Sae extends Storage{
      * @return boolean
      */
     public function put($filename,$content,$type=''){
-        echo 'xx';exit;
         switch(strtolower($type)){
             case 'f':       
                 $kv         =   $this->getKv();

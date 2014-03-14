@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-namespace Think;
+//namespace Think;
 /**
  * 缓存管理类
  */
@@ -37,7 +37,7 @@ class Cache {
      */
     public function connect($type='',$options=array()) {
         if(empty($type))  $type = Think::C('DATA_CACHE_TYPE');
-        $class  =   strpos($type,'\\')? $type : 'Think\\Cache\\Driver\\'.ucwords(strtolower($type));            
+        $class  =   strpos($type,'\\')? $type : 'Cache_'.ucwords(strtolower($type));            
         if(class_exists($class))
             $cache = new $class($options);
         else
@@ -52,13 +52,13 @@ class Cache {
      * @return mixed
      */
     static function getInstance($type='',$options=array()) {
-		static $_instance	=	array();
-		$guid	=	$type.to_guid_string($options);
-		if(!isset($_instance[$guid])){
-			$obj	=	new Cache();
-			$_instance[$guid]	=	$obj->connect($type,$options);
-		}
-		return $_instance[$guid];
+        static $_instance	=	array();
+        $guid	=	$type . Think::to_guid_string($options);
+        if(!isset($_instance[$guid])){
+                $obj	=	new Cache();
+                $_instance[$guid]	=	$obj->connect($type,$options);
+        }
+        return $_instance[$guid];
     }
 
     public function __get($name) {

@@ -8,13 +8,13 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-namespace Think\Cache\Driver;
-use Think\Cache;
-defined('THINK_PATH') or exit();
+//namespace Think\Cache\Driver;
+//use Think\Cache;
+//defined('THINK_PATH') or exit();
 /**
  * 文件类型缓存类
  */
-class File extends Cache {
+class Cache_File extends Cache {
 
     /**
      * 架构函数
