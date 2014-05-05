@@ -257,7 +257,7 @@ class Db {
         // 记录操作结束时间
         if (Think::C('DB_SQL_LOG')) {
             Think::G('queryEndTime');
-            trace($this->queryStr.' [ RunTime:'.Think::G('queryStartTime','queryEndTime',6).'s ]','','SQL');
+            //trace($this->queryStr.' [ RunTime:'.Think::G('queryStartTime','queryEndTime',6).'s ]','','SQL');
         }
     }
 
