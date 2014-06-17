@@ -5,7 +5,7 @@ class IndexController extends Yaf_Controller_Abstract {
 
         $user = new UserModel();
 
-        $user->add(array('name'=>'test'));
+        $user->add(array('name'=>'test_' . time() ));
         echo $user->getLastSql();
         echo "<br />\n";
 
