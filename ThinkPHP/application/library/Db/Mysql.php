@@ -327,7 +327,11 @@ class Db_Mysql extends Db{
         if($this->_linkID) {
             return mysql_real_escape_string($str,$this->_linkID);
         }else{
-            return mysql_escape_string($str);
+			if(version_compare(PHP_VERSION,'5.3.0','<')){
+				return mysql_escape_string($str);
+			}else{
+				return mysql_real_escape_string($str);
+			}
         }
     }
 
