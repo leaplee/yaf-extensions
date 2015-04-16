@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-//namespace Think;
+
 // 分布式文件存储类
 class Storage {
 
@@ -17,7 +17,7 @@ class Storage {
      * @var string
      * @access protected
      */
-    static protected $handler;
+    static protected $handler    ;
 
     /**
      * 连接分布式文件系统
@@ -32,12 +32,9 @@ class Storage {
     }
 
     static public function __callstatic($method,$args){
-        if(empty(self::$handler)){
-            self::connect();
-        }
         //调用缓存驱动的方法
         if(method_exists(self::$handler, $method)){
-            return call_user_func_array(array(self::$handler,$method), $args);
+           return call_user_func_array(array(self::$handler,$method), $args);
         }
     }
 }

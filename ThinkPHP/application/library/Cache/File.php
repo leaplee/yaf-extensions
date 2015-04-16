@@ -2,15 +2,13 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006-2013 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2006-2014 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-//namespace Think\Cache\Driver;
-//use Think\Cache;
-//defined('THINK_PATH') or exit();
+
 /**
  * 文件类型缓存类
  */
@@ -24,9 +22,9 @@ class Cache_File extends Cache {
         if(!empty($options)) {
             $this->options =  $options;
         }
-        $this->options['temp']      =   !empty($options['temp'])?   $options['temp']    :   Think::C('DATA_CACHE_PATH');
-        $this->options['prefix']    =   isset($options['prefix'])?  $options['prefix']  :   Think::C('DATA_CACHE_PREFIX');
-        $this->options['expire']    =   isset($options['expire'])?  $options['expire']  :   Think::C('DATA_CACHE_TIME');
+        $this->options['temp']      =   !empty($options['temp'])?   $options['temp']    :   C('DATA_CACHE_PATH');
+        $this->options['prefix']    =   isset($options['prefix'])?  $options['prefix']  :   C('DATA_CACHE_PREFIX');
+        $this->options['expire']    =   isset($options['expire'])?  $options['expire']  :   C('DATA_CACHE_TIME');
         $this->options['length']    =   isset($options['length'])?  $options['length']  :   0;
         if(substr($this->options['temp'], -1) != '/')    $this->options['temp'] .= '/';
         $this->init();
@@ -51,11 +49,11 @@ class Cache_File extends Cache {
      * @return string
      */
     private function filename($name) {
-        $name	=	md5($name);
-        if(Think::C('DATA_CACHE_SUBDIR')) {
+        $name	=	md5(C('DATA_CACHE_KEY').$name);
+        if(C('DATA_CACHE_SUBDIR')) {
             // 使用子目录
             $dir   ='';
-            for($i=0;$i<Think::C('DATA_PATH_LEVEL');$i++) {
+            for($i=0;$i<C('DATA_PATH_LEVEL');$i++) {
                 $dir	.=	$name{$i}.'/';
             }
             if(!is_dir($this->options['temp'].$dir)) {
@@ -79,7 +77,7 @@ class Cache_File extends Cache {
         if (!is_file($filename)) {
            return false;
         }
-        Think::N('cache_read',1);
+
         $content    =   file_get_contents($filename);
         if( false !== $content) {
             $expire  =  (int)substr($content,8, 12);
@@ -88,7 +86,7 @@ class Cache_File extends Cache {
                 unlink($filename);
                 return false;
             }
-            if(Think::C('DATA_CACHE_CHECK')) {//开启数据校验
+            if(C('DATA_CACHE_CHECK')) {//开启数据校验
                 $check  =  substr($content,20, 32);
                 $content   =  substr($content,52, -3);
                 if($check != md5($content)) {//校验错误
@@ -97,7 +95,7 @@ class Cache_File extends Cache {
             }else {
             	$content   =  substr($content,20, -3);
             }
-            if(Think::C('DATA_CACHE_COMPRESS') && function_exists('gzcompress')) {
+            if(C('DATA_CACHE_COMPRESS') && function_exists('gzcompress')) {
                 //启用数据压缩
                 $content   =   gzuncompress($content);
             }
@@ -118,17 +116,16 @@ class Cache_File extends Cache {
      * @return boolean
      */
     public function set($name,$value,$expire=null) {
-        Think::N('cache_write',1);
         if(is_null($expire)) {
             $expire =  $this->options['expire'];
         }
         $filename   =   $this->filename($name);
         $data   =   serialize($value);
-        if( Think::C('DATA_CACHE_COMPRESS') && function_exists('gzcompress')) {
+        if( C('DATA_CACHE_COMPRESS') && function_exists('gzcompress')) {
             //数据压缩
             $data   =   gzcompress($data,3);
         }
-        if(Think::C('DATA_CACHE_CHECK')) {//开启数据校验
+        if(C('DATA_CACHE_CHECK')) {//开启数据校验
             $check  =  md5($data);
         }else {
             $check  =  '';

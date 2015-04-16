@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Error</title>
+    </head>
+    <body>
+        <?php echo ($this->message) ? '<pre>ERR: '.$this->code.'</pre>' : ''; ?>
+        <?php echo ($this->message) ? '<pre>'.$this->message.'</pre>' : ''; ?>
+        <?php echo ($this->trace) ? '<pre>'.$this->trace.'</pre>' : ''; ?>
+    </body>
+</html>

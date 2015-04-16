@@ -8,8 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: luofei614 <weibo.com/luofei614>
 // +----------------------------------------------------------------------
-//namespace Think\Storage\Driver;
-//use Think\Storage;
+
 // SAE环境文件写入存储类
 class Storage_Sae extends Storage{
 
@@ -39,9 +38,9 @@ class Storage_Sae extends Storage{
     private function getKv(){
         static $kv;
         if(!$kv){
-           $kv  =   new SaeKV();
+           $kv  =   new \SaeKV();
            if(!$kv->init())
-               Think::E('您没有初始化KVDB，请在SAE管理平台初始化KVDB服务');
+               E('您没有初始化KVDB，请在SAE管理平台初始化KVDB服务');
         }
         return $kv;
     }
@@ -87,7 +86,7 @@ class Storage_Sae extends Storage{
             default:
                 $content    =   time().$content;
                 if(!$this->mc->set($filename,$content,MEMCACHE_COMPRESSED,0)){
-                    Think::E(Think::L('_STORAGE_WRITE_ERROR_').':'.$filename);
+                    E('STORAGE WRITE ERROR:'.$filename);
                 }else{
                     $this->contents[$filename] = $content;
                     return true;
@@ -112,14 +111,14 @@ class Storage_Sae extends Storage{
     /**
      * 加载文件
      * @access public
-     * @param string $filename  文件名
+     * @param string $_filename  文件名
      * @param array $vars  传入变量
      * @return void
      */
-    public function load($filename,$vars=null){
+    public function load($_filename,$vars=null){
         if(!is_null($vars))
             extract($vars, EXTR_OVERWRITE);
-        eval('?>'.$this->read($filename));
+        eval('?>'.$this->read($_filename));
     }
 
     /**

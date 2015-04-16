@@ -2,13 +2,13 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006-2013 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2006-2014 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-//namespace Think;
+
 /**
  * 缓存管理类
  */
@@ -36,12 +36,12 @@ class Cache {
      * @return object
      */
     public function connect($type='',$options=array()) {
-        if(empty($type))  $type = Think::C('DATA_CACHE_TYPE');
+        if(empty($type))  $type = C('DATA_CACHE_TYPE');
         $class  =   strpos($type,'\\')? $type : 'Cache_'.ucwords(strtolower($type));            
         if(class_exists($class))
             $cache = new $class($options);
         else
-            Think::E(Think::L('_CACHE_TYPE_INVALID_').':'.$type);
+            E('CACHE TYPE INVALID:'.$type);
         return $cache;
     }
 
@@ -52,13 +52,13 @@ class Cache {
      * @return mixed
      */
     static function getInstance($type='',$options=array()) {
-        static $_instance	=	array();
-        $guid	=	$type . Think::to_guid_string($options);
-        if(!isset($_instance[$guid])){
-                $obj	=	new Cache();
-                $_instance[$guid]	=	$obj->connect($type,$options);
-        }
-        return $_instance[$guid];
+		static $_instance	=	array();
+		$guid	=	$type.to_guid_string($options);
+		if(!isset($_instance[$guid])){
+			$obj	=	new Cache();
+			$_instance[$guid]	=	$obj->connect($type,$options);
+		}
+		return $_instance[$guid];
     }
 
     public function __get($name) {
@@ -107,10 +107,6 @@ class Cache {
             $key =  array_shift($value);
             // 删除缓存
             $this->rm($key);
-             if(APP_DEUBG){
-                //调试模式下，记录出列次数
-                Think::N($queue_name.'_out_times',1,true);
-            }
         }
         return $fun[1]($queue_name,$value);
     }
@@ -120,7 +116,7 @@ class Cache {
         if(method_exists($this->handler, $method)){
            return call_user_func_array(array($this->handler,$method), $args);
         }else{
-            Think::E(__CLASS__.':'.$method.Think::L('_METHOD_NOT_EXIST_'));
+            E(__CLASS__.':'.$method.' METHOD NOT EXIST');
             return;
         }
     }

@@ -8,8 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-//namespace Think\Storage\Driver;
-//use Think\Storage;
+
 // 本地文件写入存储类
 class Storage_File extends Storage{
 
@@ -41,10 +40,11 @@ class Storage_File extends Storage{
      */
     public function put($filename,$content,$type=''){
         $dir         =  dirname($filename);
-        if(!is_dir($dir))
-            mkdir($dir,0755,true);
+        if(!is_dir($dir)){
+            mkdir($dir,0777,true);
+        }
         if(false === file_put_contents($filename,$content)){
-            Think::E(Think::L('_STORAGE_WRITE_ERROR_').':'.$filename);
+            E('STORAGE WRITE ERROR:'.$filename);
         }else{
             $this->contents[$filename]=$content;
             return true;
@@ -72,10 +72,11 @@ class Storage_File extends Storage{
      * @param array $vars  传入变量
      * @return void        
      */
-    public function load($filename,$vars=null){
-        if(!is_null($vars))
+    public function load($_filename,$vars=null){
+        if(!is_null($vars)){
             extract($vars, EXTR_OVERWRITE);
-        include $filename;
+        }
+        include $_filename;
     }
 
     /**

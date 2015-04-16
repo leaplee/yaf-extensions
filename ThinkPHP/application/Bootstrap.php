@@ -14,6 +14,7 @@ class Bootstrap extends Yaf_Bootstrap_Abstract {
 */
     // ThinkPHP init
     public function _initThink(){
+        include dirname(__FILE__) . '/library/Think.php';
         // init storage type 初始化文件存储方式
         Storage::connect($this->_config->think->STORAGE_TYPE);
     }
